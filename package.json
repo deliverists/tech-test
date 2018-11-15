@@ -1,0 +1,8 @@
+{
+  "name": "fluidly",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "Nick Meldrum <nick@nickmeldrum.com>",
+  "license": "UNLICENSED",
+  "private": true
+}
