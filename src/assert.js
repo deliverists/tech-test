@@ -8,16 +8,19 @@ const { isObject, getType } = require('./type')
  * if you the test is still unproven and should be passed to the next func, return false
  */
 
-function objectTest(message, expected, actual) {
+function objectTest(message, expected, actual, state = []) {
   if (isObject(expected) && isObject(actual)) {
     // eslint-disable-next-line no-restricted-syntax, guard-for-in
     for (const key in expected) {
+      const childState = state.slice()
       if (!(key in actual)) {
-        console.log('info', this, JSON.stringify(expected), JSON.stringify(actual))
-        fail(message, `Expected ${key} but was not found`)
+        state.push(key)
+        const objectAncestorKeys = state.join('.')
+        fail(message, `Expected ${objectAncestorKeys} but was not found`)
       }
+      childState.push(key)
       // eslint-disable-next-line no-use-before-define
-      assertEquals(message, expected[key], actual[key])
+      assertEquals(message, expected[key], actual[key], childState)
     }
     return true
   }
@@ -67,12 +70,12 @@ function typeTest(message, expected, actual) {
  * @param {*} expected The expected item
  * @param {*} actual The actual item
  */
-function assertEquals(message, expected, actual) {
+function assertEquals(message, expected, actual, state) {
   const pipeline = [NaNTest, typeTest, objectTest, arrayLengthTest, arrayTest, generalTest]
 
   const pipelineLength = pipeline.length
   for (let pipelineIndex = 0; pipelineIndex < pipelineLength; pipelineIndex += 1) {
-    if (pipeline[pipelineIndex](message, expected, actual)) return
+    if (pipeline[pipelineIndex](message, expected, actual, state)) return
   }
 
   generalFail(message, expected, actual)
