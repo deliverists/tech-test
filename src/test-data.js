@@ -1,4 +1,4 @@
-module.exports.testData = {
+module.exports = {
   complexObject1: {
     propA: 1,
     propB: {
