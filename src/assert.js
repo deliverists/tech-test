@@ -7,7 +7,8 @@
  * @param {*} actual The actual item
  */
 function assertEquals(message, expected, actual) {
-  console.log('unimplemented', message, expected, actual)
+  if (expected === actual) return true
+  throw new Error(message)
 }
 
 module.exports.assertEquals = assertEquals
