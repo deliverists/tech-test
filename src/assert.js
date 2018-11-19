@@ -11,7 +11,7 @@ function assertEquals(message, expected, actual) {
     if (expected.length !== actual.length) throw new Error(message)
     const iterations = expected.length
     for (let i = 0; i < iterations; i += 1) {
-      assertEquals(message, expected[0], actual[0])
+      assertEquals(message, expected[i], actual[i])
     }
     return true
   }
