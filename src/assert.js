@@ -8,8 +8,14 @@
  */
 function assertEquals(message, expected, actual) {
   if (Array.isArray(expected) && Array.isArray(actual)) {
-    if (expected.length === actual.length) return true
+    if (expected.length !== actual.length) throw new Error(message)
+    const iterations = expected.length
+    for (let i = 0; i < iterations; i += 1) {
+      assertEquals(message, expected[0], actual[0])
+    }
+    return true
   }
+
   if (expected === actual) return true
   if (Number.isNaN(expected) && Number.isNaN(actual)) return true
   throw new Error(message)

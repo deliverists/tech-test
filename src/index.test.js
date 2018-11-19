@@ -55,6 +55,9 @@ describe('assertEquals', () => {
 
   describe('arrays', () => {
     shouldPass('[] and []', [], [])
+    shouldFail('[1] and []', [1], [])
+    shouldFail('[1] and [2]', [1], [2])
+    shouldPass('[1] and [1]', [1], [1])
   })
 
   describe('assertion message', () => {
