@@ -77,6 +77,13 @@ describe('assertEquals', () => {
     shouldFail([1, [true, 'thing', ['foo', 42]]], [1, [true, 'thing', ['foot', 42]]])
   })
 
+  describe('objects', () => {
+    shouldPass({}, {})
+    shouldPass({ foo: 'bar' }, { foo: 'bar' })
+    shouldFail({ foo: 'bar' }, {})
+    shouldFail({ foo: 'bar' }, { foo: 'bart' })
+  })
+
   describe('assertion message', () => {
     test('a failed assertion should throw the assertion message given to it', () => {
       const message = 'some test message'
