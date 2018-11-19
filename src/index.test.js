@@ -95,5 +95,26 @@ describe('assertEquals', () => {
       const message = 'some test message'
       expect(() => assertEquals(message, 'abcdef', 'abc')).toThrowError(message)
     })
+
+    test('string compare failure should show \'Expected "a" found "b"\' concatenated onto message', () => {
+      const message = 'some test message'
+      expect(() => assertEquals(message, 'abcdef', 'abc')).toThrowError(
+        `${message}Expected "abcdef" found "abc"`,
+      )
+    })
+
+    it("type compare failure should show 'Expected type Array but found Object' concatenated onto message", () => {
+      const message = 'boo'
+      expect(() => assertEquals(message, [], {})).toThrowError(
+        `${message}Expected type Array but found Object`,
+      )
+    })
+
+    it("array length failure should show 'Expected array length n but found m' concatenated onto message", () => {
+      const message = 'yah'
+      expect(() => assertEquals(message, [1, 2], [1, 2, 3])).toThrowError(
+        `${message}Expected array length 2 but found 3`,
+      )
+    })
   })
 })
