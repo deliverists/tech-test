@@ -1,5 +1,19 @@
 # Coding Challenge
 
+
+## TODO:
+
+ array tests
+ array of array tests
+ object tests
+ object of object tests
+ array of object tests
+ object of array tests
+ hacker tests (i.e. someone redefining undefined or infinity etc. (what other primitives are redefiniable?)
+ message tests - should be outputting a good message
+ perf analysis?
+
+
 From: https://jsbin.com/makohefame/1/edit?html,js,output
 
 ## Terms of the Exercise
