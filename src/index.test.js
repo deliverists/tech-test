@@ -82,6 +82,12 @@ describe('assertEquals', () => {
     shouldPass({ foo: 'bar' }, { foo: 'bar' })
     shouldFail({ foo: 'bar' }, {})
     shouldFail({ foo: 'bar' }, { foo: 'bart' })
+
+    shouldPass({ foo: { foot: 'feet' } }, { foo: { foot: 'feet' } })
+    shouldFail({ foo: { foot: 'feet' } }, { foo: { foot: 'baaaaa' } })
+
+    shouldFail({ foo: [1, 'bat'] }, { foo: [1, 'bar'] })
+    shouldFail([{ foo: 'bar' }, {}], [{}, { foo: 'bar' }])
   })
 
   describe('assertion message', () => {

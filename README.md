@@ -2,11 +2,9 @@
 
 ## TODO:
 
- object of object tests
- array of object tests
- object of array tests
  objects that are same except different prototypes?
  non enumerable properties?
+ symbol?
  hacker tests (i.e. someone redefining undefined or infinity etc. (what other primitives are redefiniable?)
  message tests - should be outputting a good message
  check for cycles in arrays/ objects
