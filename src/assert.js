@@ -8,6 +8,7 @@
  */
 function assertEquals(message, expected, actual) {
   if (expected === actual) return true
+  if (Number.isNaN(expected) && Number.isNaN(actual)) return true
   throw new Error(message)
 }
 
