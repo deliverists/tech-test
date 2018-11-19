@@ -114,7 +114,7 @@ describe('assertEquals', () => {
     it("array length failure should show 'Expected array length n but found m' concatenated onto message", () => {
       const message = 'yah'
       expect(() => assertEquals(message, [1, 2], [1, 2, 3])).toThrowError(
-        `${message}Expected array length 2 but found 3`,
+        new RegExp(`^${message}Expected array length 2 but found 3$`),
       )
     })
   })

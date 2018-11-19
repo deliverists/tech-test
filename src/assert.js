@@ -23,7 +23,7 @@ function objectTest(message, expected, actual) {
 function arrayLengthTest(message, expected, actual) {
   if (Array.isArray(expected) && Array.isArray(actual))
     if (expected.length !== actual.length)
-      fail(message, `${message}Expected array length ${expected.length} but found ${actual.length}`)
+      fail(message, `Expected array length ${expected.length} but found ${actual.length}`)
 }
 
 function arrayTest(message, expected, actual) {
