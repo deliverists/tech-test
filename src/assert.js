@@ -1,3 +1,5 @@
+class AssertionError extends Error {}
+
 function isObject(item) {
   return typeof item === 'object' && !Array.isArray(item) && item != null
 }
@@ -9,32 +11,69 @@ function getType(item) {
   return type === 'object' ? 'Object' : type
 }
 
-function generateTypeComparisonMessage(message, expected, actual) {
+function objectTest(message, expected, actual) {
+  if (isObject(expected) && isObject(actual)) {
+    // eslint-disable-next-line no-restricted-syntax, guard-for-in
+    for (const key in expected) {
+      // eslint-disable-next-line no-use-before-define
+      assertEquals(message, expected[key], actual[key])
+    }
+    return true
+  }
+  return false
+}
+
+function fail(message, assertionMessage) {
+  throw new AssertionError(`${message}${assertionMessage}`)
+}
+
+function generalFail(message, expected, actual) {
+  const expectedResult = typeof expected === 'string' ? `"${expected}"` : expected
+  const actualResult = typeof actual === 'string' ? `"${actual}"` : actual
+  fail(message, `Expected ${expectedResult} found ${actualResult}`)
+}
+
+function arrayLengthTest(message, expected, actual) {
+  if (Array.isArray(expected) && Array.isArray(actual))
+    if (expected.length !== actual.length)
+      fail(message, `${message}Expected array length ${expected.length} but found ${actual.length}`)
+}
+
+function arrayTest(message, expected, actual) {
+  if (Array.isArray(expected) && Array.isArray(actual) && expected.length === actual.length) {
+    const iterations = expected.length
+    for (let i = 0; i < iterations; i += 1) {
+      // eslint-disable-next-line no-use-before-define
+      assertEquals(message, expected[i], actual[i])
+    }
+    return true
+  }
+  return false
+}
+
+function NaNTest(message, expected, actual) {
+  if (Number.isNaN(expected) && Number.isNaN(actual)) return true
+}
+
+function generalTest(message, expected, actual) {
+  return expected === actual
+}
+
+function typeTest(message, expected, actual) {
   const expectedType = getType(expected)
   const actualType = getType(actual)
   if (expectedType !== actualType)
-    return `${message}Expected type ${expectedType} but found ${actualType}`
+    fail(message, `Expected type ${expectedType} but found ${actualType}`)
 
-  return null
+  return false
 }
 
-function generateLengthMessage(message, expected, actual) {
-  if (Array.isArray(expected) && Array.isArray(actual))
-    if (expected.length !== actual.length)
-      return `${message}Expected array length ${expected.length} but found ${actual.length}`
-
-  return null
-}
-
-function generateMessage(message, expected, actual) {
-  const typeMessage = generateTypeComparisonMessage(message, expected, actual)
-  if (typeMessage) return typeMessage
-
-  const lengthMessage = generateLengthMessage(message, expected, actual)
-  if (lengthMessage) return lengthMessage
-
-  return `${message}Expected "${expected}" found "${actual}"`
-}
+/*
+ * convention for test functions:
+ * if you know the test should fail, then generate the AssertionError by calling fail() with the correct assertion message
+ * if you know the test should pass, return true and we can immediately stop processing
+ * if you the test is still unproven and should be passed to the next func, return false
+ */
 
 /**
  * Asserts "expected" versus "actual",
@@ -45,26 +84,15 @@ function generateMessage(message, expected, actual) {
  * @param {*} actual The actual item
  */
 function assertEquals(message, expected, actual) {
-  if (isObject(expected) && isObject(actual)) {
-    // eslint-disable-next-line no-restricted-syntax, guard-for-in
-    for (const key in expected) {
-      assertEquals(message, expected[key], actual[key])
-    }
-    return true
-  }
-  if (Array.isArray(expected) && Array.isArray(actual)) {
-    if (expected.length !== actual.length)
-      throw new Error(generateMessage(message, expected, actual))
-    const iterations = expected.length
-    for (let i = 0; i < iterations; i += 1) {
-      assertEquals(message, expected[i], actual[i])
-    }
-    return true
-  }
+  if (typeTest(message, expected, actual)) return
+  if (objectTest(message, expected, actual)) return
+  if (arrayLengthTest(message, expected, actual)) return
+  if (arrayTest(message, expected, actual)) return
+  if (NaNTest(message, expected, actual)) return
 
-  if (expected === actual) return true
-  if (Number.isNaN(expected) && Number.isNaN(actual)) return true
-  throw new Error(generateMessage(message, expected, actual))
+  if (generalTest(message, expected, actual)) return // must be last
+  generalFail(message, expected, actual)
 }
 
 module.exports.assertEquals = assertEquals
+module.exports.AssertionError = AssertionError

@@ -1,4 +1,4 @@
-const { assertEquals } = require('./assert')
+const { assertEquals, AssertionError } = require('./assert')
 
 describe('assertEquals', () => {
   const stringFromVariable = variable => {
@@ -15,14 +15,14 @@ describe('assertEquals', () => {
   const shouldPass = (expected, actual) => {
     const testDescription = makeDescription(expected, actual, 'pass')
     test(testDescription, () => {
-      expect(assertEquals(testDescription, expected, actual)).toEqual(true)
+      expect(() => assertEquals(testDescription, expected, actual)).not.toThrow(AssertionError)
     })
   }
 
   const shouldFail = (expected, actual) => {
     const testDescription = makeDescription(expected, actual, 'fail')
     test(testDescription, () => {
-      expect(() => assertEquals(testDescription, expected, actual)).toThrow()
+      expect(() => assertEquals(testDescription, expected, actual)).toThrow(AssertionError)
     })
   }
 
