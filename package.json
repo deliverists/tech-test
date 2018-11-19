@@ -6,7 +6,7 @@
   "license": "UNLICENSED",
   "private": true,
   "scripts": {
-    "start": "node index.js",
+    "start": "node src/index.js",
     "test": "jest --notify --watch --coverage --collectCoverageFrom=src/**/*.js",
     "lint": "eslint ./src/**/*.js"
   },

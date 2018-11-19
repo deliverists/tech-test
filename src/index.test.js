@@ -1,7 +1,10 @@
+const { assertEquals } = require('./assert')
+
 describe('assertEquals', () => {
-  describe('test 1', () => {
-    test('description', () => {
-      expect(1).toEqual(2)
+  describe('strings', () => {
+    test('2 matching strings should be equal', () => {
+      const message = '2 matching strings should be equal'
+      expect(assertEquals(message, 'abc', 'abc')).toEqual(2)
     })
   })
 })
