@@ -11,6 +11,8 @@
  object of array tests
  hacker tests (i.e. someone redefining undefined or infinity etc. (what other primitives are redefiniable?)
  message tests - should be outputting a good message
+ check for cycles in arrays/ objects
+ remove any usage of json.stringify / parse etc.
  perf analysis?
 
 

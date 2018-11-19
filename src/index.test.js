@@ -1,63 +1,76 @@
 const { assertEquals } = require('./assert')
 
 describe('assertEquals', () => {
-  const shouldPass = (testDescription, expected, actual) => {
-    test(`${testDescription} should pass`, () => {
+  const stringFromVariable = variable => {
+    if (variable === null) return 'null'
+    if (variable === undefined) return 'undefined'
+    if (Array.isArray(variable)) return JSON.stringify(variable)
+    if (typeof variable === 'string') return `"${variable.toString()}"`
+    if (typeof variable === 'boolean' || typeof variable === 'number') return variable.toString()
+    return JSON.stringify(variable)
+  }
+  const makeDescription = (expected, actual, passOrFail) =>
+    `${stringFromVariable(expected)} and ${stringFromVariable(actual)} should ${passOrFail}`
+
+  const shouldPass = (expected, actual) => {
+    const testDescription = makeDescription(expected, actual, 'pass')
+    test(testDescription, () => {
       expect(assertEquals(testDescription, expected, actual)).toEqual(true)
     })
   }
 
-  const shouldFail = (testDescription, expected, actual) => {
-    test(`${testDescription} should fail`, () => {
+  const shouldFail = (expected, actual) => {
+    const testDescription = makeDescription(expected, actual, 'fail')
+    test(testDescription, () => {
       expect(() => assertEquals(testDescription, expected, actual)).toThrow()
     })
   }
 
   describe('strings', () => {
-    shouldPass('2 matching strings', 'abc', 'abc')
-    shouldFail('2 unmatching strings', 'abcdef', 'abc')
+    shouldPass('abc', 'abc')
+    shouldFail('abcdef', 'abc')
   })
 
   describe('numbers', () => {
-    shouldPass('2 numbers the same', 1, 1)
-    shouldFail('2 different numbers', 1, 2)
+    shouldPass(1, 1)
+    shouldFail(1, 2)
   })
 
   describe('special objects', () => {
-    shouldPass('null and null', null, null)
-    shouldPass('undefined and undefined', undefined, undefined)
-    shouldPass('NaN and NaN', NaN, NaN)
-    shouldPass('Infinity and Infinity', Infinity, Infinity)
+    shouldPass(null, null)
+    shouldPass(undefined, undefined)
+    shouldPass(NaN, NaN)
+    shouldPass(Infinity, Infinity)
 
-    shouldFail('null and undefined', null, undefined)
-    shouldFail('null and NaN', null, NaN)
-    shouldFail('null and Infinity', null, Infinity)
-    shouldFail('undefined and NaN', undefined, NaN)
-    shouldFail('undefined and Infinity', undefined, Infinity)
-    shouldFail('NaN and Infinity', NaN, Infinity)
+    shouldFail(null, undefined)
+    shouldFail(null, NaN)
+    shouldFail(null, Infinity)
+    shouldFail(undefined, NaN)
+    shouldFail(undefined, Infinity)
+    shouldFail(NaN, Infinity)
   })
 
   describe('booleans', () => {
-    shouldPass('true and true', true, true)
-    shouldPass('false and false', false, false)
-    shouldFail('true and false', true, false)
+    shouldPass(true, true)
+    shouldPass(false, false)
+    shouldFail(true, false)
   })
 
   describe('truthy/falsy', () => {
-    shouldFail('true and 1', true, 1)
-    shouldFail('false and 0', false, 0)
-    shouldFail('true and "true"', true, 'true')
-    shouldFail('1 and "1"', 1, '1')
-    shouldFail('true and []', true, [])
-    shouldFail('true and {}', true, {})
-    shouldFail('true and () => {}', true, () => {})
+    shouldFail(true, 1)
+    shouldFail(false, 0)
+    shouldFail(true, 'true')
+    shouldFail(1, '1')
+    shouldFail(true, [])
+    shouldFail(true, {})
+    shouldFail(true, () => {})
   })
 
   describe('arrays', () => {
-    shouldPass('[] and []', [], [])
-    shouldFail('[1] and []', [1], [])
-    shouldFail('[1] and [2]', [1], [2])
-    shouldPass('[1] and [1]', [1], [1])
+    shouldPass([], [])
+    shouldFail([1], [])
+    shouldFail([1], [2])
+    shouldPass([1], [1])
   })
 
   describe('assertion message', () => {
