@@ -1,6 +1,13 @@
 const { fail, generalFail } = require('./fail')
 const { isObject, getType } = require('./type')
 
+/*
+ * convention for test functions:
+ * if you know the test should fail, then generate the AssertionError by calling fail() with the correct assertion message
+ * if you know the test should pass, return true and we can immediately stop processing
+ * if you the test is still unproven and should be passed to the next func, return false
+ */
+
 function objectTest(message, expected, actual) {
   if (isObject(expected) && isObject(actual)) {
     // eslint-disable-next-line no-restricted-syntax, guard-for-in
@@ -47,13 +54,6 @@ function typeTest(message, expected, actual) {
 
   return false
 }
-
-/*
- * convention for test functions:
- * if you know the test should fail, then generate the AssertionError by calling fail() with the correct assertion message
- * if you know the test should pass, return true and we can immediately stop processing
- * if you the test is still unproven and should be passed to the next func, return false
- */
 
 /**
  * Asserts "expected" versus "actual",
