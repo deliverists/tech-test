@@ -1,15 +1,5 @@
-class AssertionError extends Error {}
-
-function isObject(item) {
-  return typeof item === 'object' && !Array.isArray(item) && item != null
-}
-
-function getType(item) {
-  if (Array.isArray(item)) return 'Array'
-  if (item === null) return 'null'
-  const type = typeof item
-  return type === 'object' ? 'Object' : type
-}
+const { fail, generalFail } = require('./fail')
+const { isObject, getType } = require('./type')
 
 function objectTest(message, expected, actual) {
   if (isObject(expected) && isObject(actual)) {
@@ -21,16 +11,6 @@ function objectTest(message, expected, actual) {
     return true
   }
   return false
-}
-
-function fail(message, assertionMessage) {
-  throw new AssertionError(`${message}${assertionMessage}`)
-}
-
-function generalFail(message, expected, actual) {
-  const expectedResult = typeof expected === 'string' ? `"${expected}"` : expected
-  const actualResult = typeof actual === 'string' ? `"${actual}"` : actual
-  fail(message, `Expected ${expectedResult} found ${actualResult}`)
 }
 
 function arrayLengthTest(message, expected, actual) {
@@ -94,5 +74,4 @@ function assertEquals(message, expected, actual) {
   generalFail(message, expected, actual)
 }
 
-module.exports.assertEquals = assertEquals
-module.exports.AssertionError = AssertionError
+module.exports = assertEquals

@@ -1,4 +1,5 @@
-const { assertEquals, AssertionError } = require('./assert')
+const AssertionError = require('./assertion-error')
+const assertEquals = require('./assert')
 
 describe('assertEquals', () => {
   const stringFromVariable = variable => {

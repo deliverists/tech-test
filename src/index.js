@@ -1,4 +1,4 @@
-const { assertEquals } = require('./assert')
+const assertEquals = require('./assert')
 const testData = require('./test-data')
 
 /**
