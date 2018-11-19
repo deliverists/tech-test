@@ -1,16 +1,21 @@
 const { assertEquals } = require('./assert')
 
 describe('assertEquals', () => {
-  describe('strings', () => {
-    test('2 matching strings should be equal', () => {
-      const message = '2 matching strings should be equal'
-      expect(assertEquals(message, 'abc', 'abc')).toEqual(true)
+  const shouldPass = (testDescription, expected, actual) => {
+    test(testDescription, () => {
+      expect(assertEquals(testDescription, expected, actual)).toEqual(true)
     })
+  }
 
-    test('2 unmatching strings should fail the test', () => {
-      const message = '2 unmatching strings should fail the test'
-      expect(() => assertEquals(message, 'abcdef', 'abc')).toThrow()
+  const shouldFail = (testDescription, expected, actual) => {
+    test(testDescription, () => {
+      expect(() => assertEquals(testDescription, expected, actual)).toThrow()
     })
+  }
+
+  describe('strings', () => {
+    shouldPass('2 matching strings should be equal', 'abc', 'abc')
+    shouldFail('2 unmatching strings should fail the test', 'abcdef', 'abc')
   })
 
   describe('assertion message', () => {
