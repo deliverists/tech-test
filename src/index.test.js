@@ -73,6 +73,8 @@ describe('assertEquals', () => {
     shouldPass([1], [1])
     shouldPass([1, 2, 'three'], [1, 2, 'three'])
     shouldFail([1, 2, 3], [1, 3, '3'])
+    shouldPass([1, [true, 'thing', ['foo', 42]]], [1, [true, 'thing', ['foo', 42]]])
+    shouldFail([1, [true, 'thing', ['foo', 42]]], [1, [true, 'thing', ['foot', 42]]])
   })
 
   describe('assertion message', () => {

@@ -3,8 +3,6 @@
 
 ## TODO:
 
- array tests
- array of array tests
  object tests
  object of object tests
  array of object tests
