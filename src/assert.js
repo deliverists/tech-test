@@ -12,6 +12,10 @@ function objectTest(message, expected, actual) {
   if (isObject(expected) && isObject(actual)) {
     // eslint-disable-next-line no-restricted-syntax, guard-for-in
     for (const key in expected) {
+      if (!(key in actual)) {
+        console.log('info', this, JSON.stringify(expected), JSON.stringify(actual))
+        fail(message, `Expected ${key} but was not found`)
+      }
       // eslint-disable-next-line no-use-before-define
       assertEquals(message, expected[key], actual[key])
     }

@@ -1,5 +1,6 @@
 const AssertionError = require('./assertion-error')
 const assertEquals = require('./assert')
+const testData = require('./test-data')
 
 describe('assertEquals', () => {
   const stringFromVariable = variable => {
@@ -116,6 +117,13 @@ describe('assertEquals', () => {
       expect(() => assertEquals(message, [1, 2], [1, 2, 3])).toThrowError(
         new RegExp(`^${message}Expected array length 2 but found 3$`),
       )
+    })
+
+    it("missing prop should show 'Expected propB.propC but was not found'", () => {
+      const message = 'yah'
+      expect(() =>
+        assertEquals(message, testData.complexObject1, testData.complexObject3),
+      ).toThrowError(new RegExp(`^${message}Expected propB.propC but was not found$`))
     })
   })
 })

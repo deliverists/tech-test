@@ -2,14 +2,12 @@
 
 ## TODO:
 
-rename test file assert.test.js
+ refactor message asserts - so all our expectations are on exact string and no duplication in tests
  objects that are same except different prototypes?
  non enumerable properties?
  symbol?
  hacker tests (i.e. someone redefining undefined or infinity etc. (what other primitives are redefiniable?)
- message tests - should be outputting a good message
  check for cycles in arrays/ objects
- remove any usage of json.stringify / parse etc.
  perf analysis?
 
 From: https://jsbin.com/makohefame/1/edit?html,js,output
