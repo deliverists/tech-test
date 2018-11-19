@@ -64,13 +64,13 @@ function typeTest(message, expected, actual) {
  * @param {*} actual The actual item
  */
 function assertEquals(message, expected, actual) {
-  if (typeTest(message, expected, actual)) return
-  if (objectTest(message, expected, actual)) return
-  if (arrayLengthTest(message, expected, actual)) return
-  if (arrayTest(message, expected, actual)) return
-  if (NaNTest(message, expected, actual)) return
+  const pipeline = [NaNTest, typeTest, objectTest, arrayLengthTest, arrayTest, generalTest]
 
-  if (generalTest(message, expected, actual)) return // must be last
+  const pipelineLength = pipeline.length
+  for (let pipelineIndex = 0; pipelineIndex < pipelineLength; pipelineIndex += 1) {
+    if (pipeline[pipelineIndex](message, expected, actual)) return
+  }
+
   generalFail(message, expected, actual)
 }
 

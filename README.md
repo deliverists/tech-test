@@ -2,6 +2,7 @@
 
 ## TODO:
 
+rename test file assert.test.js
  objects that are same except different prototypes?
  non enumerable properties?
  symbol?
