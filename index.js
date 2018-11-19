@@ -7,7 +7,6 @@
  * @param {*} actual The actual item
  */
 function assertEquals(message, expected, actual) {
-    
 }
 
 
@@ -78,14 +77,8 @@ function runAll() {
 
   
   // Output the results
-  var messagesEl = document.getElementById('messages');
-  var newListEl;
-  var i, ii;
-  
   for (i = 0, ii = assertionFailures.length; i < ii; i++) {    
-    newListEl = document.createElement('li');
-    newListEl.innerHTML = assertionFailures[i];
-    messagesEl.appendChild(newListEl);    
+    console.log(assertionFailures[i]);
   }
 }
 

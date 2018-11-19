@@ -4,5 +4,8 @@
   "main": "index.js",
   "author": "Nick Meldrum <nick@nickmeldrum.com>",
   "license": "UNLICENSED",
-  "private": true
+  "private": true,
+  "scripts": {
+    "start": "node index.js"
+  }
 }
