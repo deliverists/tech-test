@@ -109,19 +109,23 @@ describe('assertEquals', () => {
         'Expected "abcdef" but found "abc"',
       )
     })
-
-    it("type compare failure should show 'Expected type Array but found Object' concatenated onto message", () => {
-      testExactAssertionMessage(
-        message => () => assertEquals(message, [], {}),
-        'Expected type Array but found Object',
-      )
-    })
-
-    it("array length failure should show 'Expected array length n but found m' concatenated onto message", () => {
-      testExactAssertionMessage(
-        message => () => assertEquals(message, [1, 2], [1, 2, 3]),
-        'Expected array length 2 but found 3',
-      )
+    ;[
+      {
+        description:
+          "type compare failure should show 'Expected type Array but found Object' concatenated onto message",
+        assertFunc: message => () => assertEquals(message, [], {}),
+        regexExpectation: 'Expected type Array but found Object',
+      },
+      {
+        description:
+          "array length failure should show 'Expected array length n but found m' concatenated onto message",
+        assertFunc: message => () => assertEquals(message, [1, 2], [1, 2, 3]),
+        regexExpectation: 'Expected array length 2 but found 3',
+      },
+    ].forEach(testSetup => {
+      it(testSetup.description, () => {
+        testExactAssertionMessage(testSetup.assertFunc, testSetup.regexExpectation)
+      })
     })
 
     it("missing prop should show 'Expected propB.propC but was not found'", () => {
