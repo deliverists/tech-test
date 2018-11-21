@@ -101,7 +101,7 @@ describe('assertEquals', () => {
     test('string compare failure should show \'Expected "a" found "b"\' concatenated onto message', () => {
       const message = 'some test message'
       expect(() => assertEquals(message, 'abcdef', 'abc')).toThrowError(
-        `${message}Expected "abcdef" found "abc"`,
+        `${message}Expected "abcdef" but found "abc"`,
       )
     })
 
@@ -130,7 +130,7 @@ describe('assertEquals', () => {
       const message = 'yah'
       expect(() =>
         assertEquals(message, testData.complexObject1, testData.complexObject2),
-      ).toThrowError(new RegExp(`^${message}Expected propB.propA[1].propB "b" but was found "c"$`))
+      ).toThrowError(new RegExp(`^${message}Expected propB.propA\\[1\\].propB "b" but found "c"$`))
     })
   })
 })

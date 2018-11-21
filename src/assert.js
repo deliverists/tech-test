@@ -33,12 +33,14 @@ function arrayLengthTest(message, expected, actual) {
       fail(message, `Expected array length ${expected.length} but found ${actual.length}`)
 }
 
-function arrayTest(message, expected, actual) {
+function arrayTest(message, expected, actual, state = []) {
   if (Array.isArray(expected) && Array.isArray(actual) && expected.length === actual.length) {
     const iterations = expected.length
     for (let i = 0; i < iterations; i += 1) {
+      state.push(`[${i}]`)
       // eslint-disable-next-line no-use-before-define
-      assertEquals(message, expected[i], actual[i])
+      assertEquals(message, expected[i], actual[i], state)
+      state.pop()
     }
     return true
   }
@@ -78,7 +80,7 @@ function assertEquals(message, expected, actual, state) {
     if (pipeline[pipelineIndex](message, expected, actual, state)) return
   }
 
-  generalFail(message, expected, actual)
+  generalFail(message, expected, actual, state)
 }
 
 module.exports = assertEquals

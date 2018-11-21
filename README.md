@@ -8,10 +8,17 @@ There are some decisions that have to be made when deciding how to implement ass
 
  * I am also purposely ignoring the order that properties exist on an object. I realise that this could be argued that order of properties is important as it's possible to loop through properties by index. However, I believe that a typical use case of an objects properties wouldn't care about order so I'm not either.
 
+ * I noticed that a complexity in the "Expected output" in the "terms of the exercise" is that in some instances the word "but" is used and in some it isn't. I decided to "change the game" a bit here for simplicity and therefore my expectations are that the word "but" ALWAYS should appear. In the real world this is the kind of subtlety I would discuss with business owners/ customers to see whether this subtle complexity in the specification is really desired or not before writing the more complex solution to cover it.
+
+ * I have also decided not to publish the "ancestor keys" into the message in other places it might be appropriate - this was merely because of time constraints.
+
+ * I have made some shortcuts that given more time I would clean up - When I build the string to create the "ancestor keys" in the message I make a big assumption that any key beginning with a '[' is an array index instead of a property name. Instead I would refactor this to pass the type as well as the property name in the state in the future.
+
  * Note: I'm also aware there are some edge cases of equality here that I am not solving but I believe a more complete solution is outside the realms of this technical test.
 
 ## TODO:
 
+ refactor duplication in message asserts around joining the ancestor keys
  refactor message asserts - so all our expectations are on exact string and no duplication in tests
  objects that are same except different prototypes?
  non enumerable properties?
