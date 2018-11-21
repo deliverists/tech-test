@@ -104,31 +104,31 @@ describe('assertEquals', () => {
     })
 
     test('string compare failure should show \'Expected "a" found "b"\' concatenated onto message', () => {
-      const message = 'some test message'
-      expect(() => assertEquals(message, 'abcdef', 'abc')).toThrowError(
-        `${message}Expected "abcdef" but found "abc"`,
+      testExactAssertionMessage(
+        message => () => assertEquals(message, 'abcdef', 'abc'),
+        'Expected "abcdef" but found "abc"',
       )
     })
 
     it("type compare failure should show 'Expected type Array but found Object' concatenated onto message", () => {
-      const message = 'boo'
-      expect(() => assertEquals(message, [], {})).toThrowError(
-        `${message}Expected type Array but found Object`,
+      testExactAssertionMessage(
+        message => () => assertEquals(message, [], {}),
+        'Expected type Array but found Object',
       )
     })
 
     it("array length failure should show 'Expected array length n but found m' concatenated onto message", () => {
-      const message = 'yah'
-      expect(() => assertEquals(message, [1, 2], [1, 2, 3])).toThrowError(
-        new RegExp(`^${message}Expected array length 2 but found 3$`),
+      testExactAssertionMessage(
+        message => () => assertEquals(message, [1, 2], [1, 2, 3]),
+        'Expected array length 2 but found 3',
       )
     })
 
     it("missing prop should show 'Expected propB.propC but was not found'", () => {
-      const message = 'yah'
-      expect(() =>
-        assertEquals(message, testData.complexObject1, testData.complexObject3),
-      ).toThrowError(new RegExp(`^${message}Expected propB.propC but was not found$`))
+      testExactAssertionMessage(
+        message => () => assertEquals(message, testData.complexObject1, testData.complexObject3),
+        'Expected propB.propC but was not found',
+      )
     })
 
     it('missing prop off indexed object should show \'Expected propB.propA[1].propB "b" but found "c"\'', () => {
