@@ -14,12 +14,12 @@ There are some decisions that have to be made when deciding how to implement ass
 
  * I have made some shortcuts that given more time I would clean up - When I build the string to create the "ancestor keys" in the message I make a big assumption that any key beginning with a '[' is an array index instead of a property name. Instead I would refactor this to pass the type as well as the property name in the state in the future.
 
+ * I have no doubt there are bugs, especially in the recursive ancestor key message generation part. If I had more time I would expand on the data driven tests at the end of the `assert.test.js` file to drive these bugs out.
+
  * Note: I'm also aware there are some edge cases of equality here that I am not solving but I believe a more complete solution is outside the realms of this technical test.
 
 ## TODO:
 
- refactor duplication in message asserts around joining the ancestor keys
- refactor message asserts - so all our expectations are on exact string and no duplication in tests
  objects that are same except different prototypes?
  non enumerable properties?
  symbol?
