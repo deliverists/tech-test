@@ -1,5 +1,15 @@
 # Coding Challenge
 
+## Assumptions made:
+
+There are some decisions that have to be made when deciding how to implement assertEquals to decide what exactly equality means when it comes to complex objects. A couple assumptions I have made are:
+
+ * I am purposely allowing a property check into the prototype chain. I believe the "user" of an object shouldn't care how a property is getting returned (whether it be from the object itself or from it's prototype) to consider it equal.  The same is true to whether it is being retrieved via an ES6 Proxy object or via a special getter method that might be different on 2 different objects. Some of these things are possible to check for and some aren't. I believe a safer decision when judging equality is merely "does the property exist on both objects and do they return the same value". I don't care how the object returns that value.
+
+ * I am also purposely ignoring the order that properties exist on an object. I realise that this could be argued that order of properties is important as it's possible to loop through properties by index. However, I believe that a typical use case of an objects properties wouldn't care about order so I'm not either.
+
+ * Note: I'm also aware there are some edge cases of equality here that I am not solving but I believe a more complete solution is outside the realms of this technical test.
+
 ## TODO:
 
  refactor message asserts - so all our expectations are on exact string and no duplication in tests
