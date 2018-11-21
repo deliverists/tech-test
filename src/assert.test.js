@@ -93,6 +93,11 @@ describe('assertEquals', () => {
   })
 
   describe('assertion message', () => {
+    const testExactAssertionMessage = (funcToThrow, regexExpectationString) => {
+      const message = 'something'
+      expect(funcToThrow(message)).toThrowError(new RegExp(`^${message}${regexExpectationString}$`))
+    }
+
     test('a failed assertion should throw the assertion message given to it', () => {
       const message = 'some test message'
       expect(() => assertEquals(message, 'abcdef', 'abc')).toThrowError(message)
@@ -127,10 +132,10 @@ describe('assertEquals', () => {
     })
 
     it('missing prop off indexed object should show \'Expected propB.propA[1].propB "b" but found "c"\'', () => {
-      const message = 'yah'
-      expect(() =>
-        assertEquals(message, testData.complexObject1, testData.complexObject2),
-      ).toThrowError(new RegExp(`^${message}Expected propB.propA\\[1\\].propB "b" but found "c"$`))
+      testExactAssertionMessage(
+        message => () => assertEquals(message, testData.complexObject1, testData.complexObject2),
+        'Expected propB.propA\\[1\\].propB "b" but found "c"$',
+      )
     })
   })
 })
