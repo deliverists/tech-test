@@ -125,5 +125,12 @@ describe('assertEquals', () => {
         assertEquals(message, testData.complexObject1, testData.complexObject3),
       ).toThrowError(new RegExp(`^${message}Expected propB.propC but was not found$`))
     })
+
+    it('missing prop off indexed object should show \'Expected propB.propA[1].propB "b" but found "c"\'', () => {
+      const message = 'yah'
+      expect(() =>
+        assertEquals(message, testData.complexObject1, testData.complexObject2),
+      ).toThrowError(new RegExp(`^${message}Expected propB.propA[1].propB "b" but was found "c"$`))
+    })
   })
 })
