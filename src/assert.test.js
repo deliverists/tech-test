@@ -122,24 +122,23 @@ describe('assertEquals', () => {
         assertFunc: message => () => assertEquals(message, [1, 2], [1, 2, 3]),
         regexExpectation: 'Expected array length 2 but found 3',
       },
+      {
+        description: "missing prop should show 'Expected propB.propC but was not found'",
+        assertFunc: message => () =>
+          assertEquals(message, testData.complexObject1, testData.complexObject3),
+        regexExpectation: 'Expected propB.propC but was not found',
+      },
+      {
+        description:
+          'missing prop off indexed object should show \'Expected propB.propA[1].propB "b" but found "c"\'',
+        assertFunc: message => () =>
+          assertEquals(message, testData.complexObject1, testData.complexObject2),
+        regexExpectation: 'Expected propB.propA\\[1\\].propB "b" but found "c"$',
+      },
     ].forEach(testSetup => {
       it(testSetup.description, () => {
         testExactAssertionMessage(testSetup.assertFunc, testSetup.regexExpectation)
       })
-    })
-
-    it("missing prop should show 'Expected propB.propC but was not found'", () => {
-      testExactAssertionMessage(
-        message => () => assertEquals(message, testData.complexObject1, testData.complexObject3),
-        'Expected propB.propC but was not found',
-      )
-    })
-
-    it('missing prop off indexed object should show \'Expected propB.propA[1].propB "b" but found "c"\'', () => {
-      testExactAssertionMessage(
-        message => () => assertEquals(message, testData.complexObject1, testData.complexObject2),
-        'Expected propB.propA\\[1\\].propB "b" but found "c"$',
-      )
     })
   })
 })
