@@ -5,7 +5,7 @@ const { isObject, getType } = require('./type')
  * convention for test functions:
  * if you know the test should fail, then generate the AssertionError by calling fail() with the correct assertion message
  * if you know the test should pass, return true and we can immediately stop processing
- * if you the test is still unproven and should be passed to the next func, return false
+ * if you know the test is still unproven and should be passed to the next func, return false
  */
 
 function objectTest(message, expected, actual, state = []) {
